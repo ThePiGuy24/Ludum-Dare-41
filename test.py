@@ -19,6 +19,7 @@ ypos = 0
 xaxis = 0
 yaxis = 0
 angle = 0
+realAngle = 0
 
 width = 640
 height = 480
@@ -38,6 +39,7 @@ clock = pygame.time.Clock()
 pygame.display.set_caption('idkwhattocallthegameyet')
 
 playerCar = pygame.image.load('playerCar.png')
+vignette = pygame.image.load('vignette.png')
 map = pygame.Surface((1024,1024))
 map.fill(white)
 tiles = pygame.image.load('tiles.png')
@@ -75,6 +77,9 @@ for line in range(len(tileMap)):
 		for point in range(len(tileMap[line])):
 			map.blit(tiles, [line*32,(point)*32], [(tileMap[line][point]%16)*32,(tileMap[line][point]//16)*32,32,32])
 
+yrot = [0,0.7,1,0.7,0,-0.7,-1,-0.7]
+xrot = [1,0.7,0,-0.7,-1,-0.7,0,0.7]
+			
 while not Exit:
 	t = time.time()
 	for event in pygame.event.get():
@@ -82,45 +87,32 @@ while not Exit:
 			Exit = True
 			print('Closing...')
 		if event.type == pygame.MOUSEMOTION:
-			mousey = event.pos[0]
-			mousex = event.pos[1]
-		if event.type == pygame.JOYBUTTONDOWN:
-			print(event.button)
+			mousey = event.pos[0] - width / 2
+			mousex = event.pos[1] - height / 2
 		
-	##print(velocity)
-		
-	##xaxis = pygame.key.get_pressed()[pygame.K_UP] - pygame.key.get_pressed()[pygame.K_DOWN]
-	##yaxis = pygame.key.get_pressed()[pygame.K_RIGHT] - pygame.key.get_pressed()[pygame.K_LEFT]
-	if pygame.mouse.get_pressed()[0] == 1:
-		if mousex > (height/3)*2:
-			xaxis = -1
-		elif mousex < height/3:
-			xaxis = 1
-		else:
-			xaxis = 0
-		if mousey < width/3:
-			yaxis = -1
-		elif mousey > (width/3)*2:
-			yaxis = 1
-		else:
-			yaxis = 0
-		if int(math.atan2(yaxis,xaxis)/math.pi*180) < 0:
-			angle = int((int(math.atan2(yaxis,xaxis)/math.pi*180) + 360)/45)
-		else:
-			angle = int(int(math.atan2(yaxis,xaxis)/math.pi*180)/45)
+	if pygame.key.get_pressed()[pygame.K_UP] == 1:
 		velocity = velocity + 0.5
+	if pygame.key.get_pressed()[pygame.K_DOWN] == 1:
+		velocity = velocity - 0.3
+	if pygame.key.get_pressed()[pygame.K_RIGHT] == 1:
+		realAngle = realAngle + 0.1
+	if pygame.key.get_pressed()[pygame.K_LEFT] == 1:
+		realAngle = realAngle - 0.1
 		
-	xpos = xpos + (xaxis * velocity)
-	ypos = ypos + (yaxis * velocity)
+	angle = int(realAngle) % 8
+		 
+	xpos = xpos + (xrot[angle] * velocity)
+	ypos = ypos + (yrot[angle] * velocity)
 	
 	dispOut.fill(black)
-	if velocity > 0.1:
+	if abs(velocity) > 0.1:
 		velocity = velocity * 0.95
 	else:
 		velocity = 0
 	dispOut.blit(map, [-ypos,xpos])
 	dispOut.blit(playerCar, [288,208],[angle*64,0,64,64])
 	clock.tick(30)
+	dispOut.blit(vignette, [0,0])
 	dispText(str(int(1/(time.time() - t))),white,0,0)
 	pygame.display.update()
 
