@@ -36,7 +36,7 @@ mainFont = pygame.font.Font(None, 16)
 dispOut = pygame.display.set_mode((640,480))
 clock = pygame.time.Clock()
 
-pygame.display.set_caption('idkwhattocallthegameyet')
+pygame.display.set_caption('i failed this time, maybe next time...')
 
 playerCar = pygame.image.load('playerCar.png')
 vignette = pygame.image.load('vignette.png')
