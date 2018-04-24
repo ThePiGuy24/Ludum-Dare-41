@@ -108,6 +108,10 @@ while not pibotExit:
 				xoffset = xoffset + 1
 			if event.key == pygame.K_RIGHT:
 				xoffset = xoffset - 1
+			if event.key == pygame.K_KP_PLUS:
+				tile = tile + 1
+			if event.key == pygame.K_KP_MINUS:
+				tile = tile - 1
 		
 		tile = tile % 256
 		print(tile)
