@@ -20,6 +20,7 @@ xaxis = 0
 yaxis = 0
 angle = 0
 realAngle = 0
+eventCounter = 0
 
 width = 640
 height = 480
@@ -89,13 +90,18 @@ while not Exit:
 		if event.type == pygame.MOUSEMOTION:
 			mousey = event.pos[0] - width / 2
 			mousex = event.pos[1] - height / 2
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+				eventCounter = 0
+	
+	if eventCounter > 0:
+		eventCounter = eventCounter - 1
+	print(eventCounter)
 	
 	if pygame.key.get_pressed()[pygame.K_UP] == 1:
 		velocity = velocity + 0.5
 	if pygame.key.get_pressed()[pygame.K_DOWN] == 1:
 		velocity = velocity - 0.3
-		
-	angle = int(realAngle) % 8
 		 
 	xpos = xpos + (xrot[angle] * velocity)
 	ypos = ypos + (yrot[angle] * velocity)
@@ -103,12 +109,18 @@ while not Exit:
 	dispOut.fill(black)
 	if abs(velocity) > 0.1:
 		velocity = velocity * 0.95
-		if pygame.key.get_pressed()[pygame.K_RIGHT] == 1:
-			realAngle = realAngle + 0.1
-		if pygame.key.get_pressed()[pygame.K_LEFT] == 1:
-			realAngle = realAngle - 0.1
+		if eventCounter == 0:
+			if pygame.key.get_pressed()[pygame.K_RIGHT] == 1:
+				angle = angle + 1
+				eventCounter = 10
+			if pygame.key.get_pressed()[pygame.K_LEFT] == 1:
+				angle = angle - 1
+				eventCounter = 10
 	else:
 		velocity = 0
+
+	angle = int(angle) % 8
+		
 	dispOut.blit(map, [-ypos,xpos])
 	dispOut.blit(playerCar, [288,208],[angle*64,0,64,64])
 	clock.tick(30)
