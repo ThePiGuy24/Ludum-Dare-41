@@ -89,6 +89,11 @@ while not Exit:
 		if event.type == pygame.MOUSEMOTION:
 			mousey = event.pos[0] - width / 2
 			mousex = event.pos[1] - height / 2
+	
+	if pygame.key.get_pressed()[pygame.K_UP] == 1:
+		velocity = velocity + 0.5
+	if pygame.key.get_pressed()[pygame.K_DOWN] == 1:
+		velocity = velocity - 0.3
 		
 	angle = int(realAngle) % 8
 		 
@@ -98,10 +103,6 @@ while not Exit:
 	dispOut.fill(black)
 	if abs(velocity) > 0.1:
 		velocity = velocity * 0.95
-		if pygame.key.get_pressed()[pygame.K_UP] == 1:
-			velocity = velocity + 0.5
-		if pygame.key.get_pressed()[pygame.K_DOWN] == 1:
-			velocity = velocity - 0.3
 		if pygame.key.get_pressed()[pygame.K_RIGHT] == 1:
 			realAngle = realAngle + 0.1
 		if pygame.key.get_pressed()[pygame.K_LEFT] == 1:
