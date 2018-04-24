@@ -116,7 +116,7 @@ while not pibotExit:
 	for line in range(len(tileMap)):
 		for point in range(len(tileMap[line])):
 			dispOut.blit(tiles, [(line+xoffset)*32,(point+1+yoffset)*32], [(tileMap[line][point]%16)*32,(tileMap[line][point]//16)*32,32,32])
-	if pygame.mouse.get_pressed()[0] == 1:
+	if pygame.mouse.get_pressed()[0] == 1 and xpos > 0:
 		tileMap[ypos-xoffset][(xpos-1)-yoffset] = tile
 	dispOut.blit(tiles, [ypos*32,xpos*32], [(tile%16)*32,(tile//16)*32,32,32])
 	dispOut.fill(black, rect=[0,0,width,32])
