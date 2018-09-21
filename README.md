@@ -11,4 +11,4 @@ I have sice updated the game several times and added new features.
 
 # Requirements (earlier versions may work, but are untested):
 Python <= 3.4
-    pygame <= 1.9.2
+	pygame <= 1.9.2
