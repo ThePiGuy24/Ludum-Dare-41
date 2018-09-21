@@ -1,3 +1,6 @@
 # Ludum-Dare-41
-run test.py
-hold down left click to move car in direction of mouse
+This was my entry for Ludum Dare 41:
+
+The one submitted for the challenge was Ludum-Dare-41-210418.zip
+
+I have sice updated the game several times and added new features
